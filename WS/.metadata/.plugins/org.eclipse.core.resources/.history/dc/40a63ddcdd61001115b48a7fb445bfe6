@@ -1,0 +1,77 @@
+package test.test;
+
+import android.app.Activity;
+import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.TextView;
+
+public class TestInvalidateActivity extends Activity {
+	
+	
+	int screenW;
+	int screenH;
+	int itemW = 50;
+	int itemH = 50;
+	
+	int intemsInRow = 6;
+	int rows = 100;
+	
+    /** Called when the activity is first created. */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        
+        
+        
+        
+        ScrollView scrollview = new ScrollView(this);
+        scrollview.setBackgroundColor(Color.RED);
+        scrollview.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT));
+        setContentView(scrollview);
+        
+        
+        BenchmarkedLinearLayout linear1 = new BenchmarkedLinearLayout(this);
+        //linear1.setLayoutParams(new ScrollView.LayoutParams(ScrollView.LayoutParams.FILL_PARENT, ScrollView.LayoutParams.FILL_PARENT));
+        //linear1.setLayoutParams(new ScrollView.LayoutParams(1000,1000));
+        linear1.setBackgroundColor(Color.YELLOW);
+        scrollview.addView(linear1);
+        
+        TextView tv = new TextView(this);
+        tv.setLayoutParams(new BenchmarkedLinearLayout.LayoutParams(100,100));
+        //tv.setText("zxc\nc\nc\nc\nc\nc\nc\nc\nc\nc\nc\nc\nc\nc\nc\nc\nc\nc\nc\nc\nc\nc\nc\nc\nc\nc\nc\nc\nc\nc\nc\nc\nc\nc\nc\nc\nc\nc\nc\nc\nc\nc\nc\nc\nc\nc\nc\nc\nzxczxczxczxcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc");
+        
+        linear1.addView(tv);
+    }
+    
+    
+    
+    class BenchmarkedLinearLayout extends LinearLayout{
+    	public BenchmarkedLinearLayout(Context context) {
+			super(context);
+			// TODO Auto-generated constructor stub
+		}
+
+		@Override
+    	public void invalidate() {
+    		
+    		Log.i("-----------", "zxczxczxczxczxc");
+    		
+    		super.invalidate();
+    	}
+
+		
+		@Override
+		public void draw(Canvas canvas) {
+			Log.i("-----------", "draw");
+			super.draw(canvas);
+			Log.i("-----------", "/draw");
+		}
+    }
+}
